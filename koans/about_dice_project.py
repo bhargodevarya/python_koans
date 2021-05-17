@@ -7,7 +7,7 @@ import random
 
 class DiceSet:
     def __init__(self):
-        self._values = None
+        self._values = []
 
     @property
     def values(self):
@@ -16,7 +16,12 @@ class DiceSet:
     def roll(self, n):
         # Needs implementing!
         # Tip: random.randint(min, max) can be used to generate random numbers
-        pass
+        res = [None] * n
+        for inx in range(0,n):
+            value = random.randint(1,6)
+            res[inx] = value
+        
+        self._values = res
 
 class AboutDiceProject(Koan):
     def test_can_create_a_dice_set(self):

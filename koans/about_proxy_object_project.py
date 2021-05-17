@@ -23,9 +23,57 @@ class Proxy:
         # WRITE CODE HERE
 
         #initialize '_obj' attribute last. Trust me on this!
+        self._on = False
+        self._channel = 0
+        self._messages = []
         self._obj = target_object
 
     # WRITE CODE HERE
+
+    def power(self):
+        if len(self._messages) == 0:
+            self._messages = ['power']
+        else:
+            self._messages.append('power')
+            
+        if self._on:
+            self._on = False
+        else:
+            self._on = True
+        
+
+    def is_on(self):
+        return self._on
+
+    @property
+    def channel(self):
+        return self._channel
+    
+    @channel.setter
+    def channel(self, new_channel):
+        self._messages.append('channel')
+        self._channel = new_channel
+
+    def messages(self):
+        return self._messages
+    
+    def was_called(self, message):
+        return message in self._messages
+
+    def number_of_times_called(self, message):
+        return self._messages.count(message)
+
+    def upper(self):
+        self._messages.append('upper')
+        if type(self._obj).__name__ != 'Television':
+            return self._obj.upper()
+
+    def split(self):
+        self._messages.append('split')
+        if type(self._obj).__name__ != 'Television':
+            return self._obj.split()
+
+        
 
 # The proxy object should pass the following Koan:
 #

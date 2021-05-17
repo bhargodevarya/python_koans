@@ -34,7 +34,60 @@ from runner.koan import *
 
 def score(dice):
     # You need to write this method
-    pass
+    if dice == []:
+        return 0
+    
+    if len(dice) == 1:
+        if dice[0] == 5:
+            return 50
+        if dice[0] == 1:
+            return 100
+        return 0
+    
+    index = 0
+    result = 0
+    count = {}
+    while True:
+        if index == len(dice): break
+        if index <= len(dice)-3 and dice[index] == dice[index+1] and dice[index] == dice[index+2]:
+            if dice[index] == 1:
+                result += 1000
+            else:
+                result += dice[index] * 100
+            index += 3
+            continue
+
+        if dice[index] in count:
+            count[dice[index]] = count[dice[index]] +1
+        else:
+            count[dice[index]] = 1
+        index += 1
+    
+    print(count)
+
+    for item in list(count.keys()):
+        occ = count.pop(item)
+        if item == 5:
+            if occ % 3 == 0:
+                result += (occ/3)*5
+            elif occ == 1 or occ == 2:
+                result += occ*50
+            else:
+                result += (occ/3)*50
+                result += (occ%3)*5
+        elif item == 1:
+            if occ % 3 == 0:
+                result += (occ/3)*1
+            elif occ == 1 or occ == 2:
+                result += occ*100
+            else:
+                result += (occ/3)*100
+                result += (occ%3)*1
+        else:
+            if occ >=3 and occ % 3 == 0:
+                result += (occ/3)*item*100
+    
+    return result
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
